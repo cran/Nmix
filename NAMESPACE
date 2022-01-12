@@ -1,0 +1,9 @@
+useDynLib(Nmix,.registration=TRUE)
+S3method(print,nmix)
+S3method(summary,nmix)
+S3method(plot,nmix)
+export(Nmix,plot.nmix,print.nmix,summary.nmix)
+importFrom("graphics", "axis", "barplot", "hist", "layout", "lines",
+             "mtext", "par", "title")
+useDynLib(Nmix, .registration = TRUE)
+

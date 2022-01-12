@@ -1,0 +1,10 @@
+sdrni<-function(seed)
+{
+if(seed==0) 
+	{
+	set.seed(NULL)
+	seed<-sample(1:999999999,1)
+	}
+set.seed(seed)
+seed
+}
