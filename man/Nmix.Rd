@@ -12,8 +12,9 @@ Nmix(y,tag="",seed=0,nsweep=10000,nburnin=0,kinit=1,
 	qempty=1,qprior=0,qunif=0,qfix=0,qrkpos=0,qrange=1,qkappa=0,
 	qbeta=1,qkreg=0,out="",qfull,alpha=2,beta=0.02,delta=1,eee=0,
 	fff=0,ggg=0.2,hhh=10,unhw=1.0,kappa=1.0,lambda=-1,xi=0.0,sp=1,
-	nspace=nsweep\%/\%1000,nsamp=100,nskdel=2,nmax=length(y),ncmax=30,
-	ncmax2=10,ncd=7,ngrid=200,kkzz=35,idebug=-1,qdebug=0) 
+	nspace=nsweep\%/\%1000,nparsamp=7*(nsweep\%/\%nspace),nsamp=100,
+      nskdel=2,nmax=length(y),ncmax=30,ncmax2=10,ncd=7,ngrid=200,kkzz=35,
+      idebug=-1,qdebug=0) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,6 +37,9 @@ length of burn in
 }
   \item{nspace}{
 spacing between samples recorded in time-series traces (\code{ktr}, etc)
+}
+  \item{nparsamp}{
+maximum number of (weight,mean,s.d.) triples saved in trace
 }
   \item{out}{
 character string to specify optional output: string containing letters 'a','c','d',or 'w' correspond to Fortran program options -pa, -pc, -pd, or -pw. Only 'd' currently implemented
@@ -147,6 +151,7 @@ An object of class \code{nmix}. List with numerous components, including
   \item{den}{matrix of density estimates for \code{k=1,2,...,6} and overall, preceded by row of abcissae at which they are evaluated - only when \code{out} includes "d"}
   \item{avn}{order-\code{ncmax2} square matrix with \code{(i,j)} entry the posterior expected number of observations allocated to component \code{i} when there are \code{j} components in the mixture - only when \code{out} includes "d"}
   \item{traces}{list of named vectors, traces of selected statistics \code{k}, \code{entropy} (as defined in Green and Richardson, 2001), etc, sub-sampled to every \code{nspace} sweeps}
+  \item{partr}{list of 3-column matrices, sub-sampled trace of (weight,mean,sd) triples}
 %% ...
 }
 \references{

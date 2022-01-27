@@ -8,7 +8,7 @@ Plotting for Bayesian Inference on Univariate Normal Mixtures
 Plotting of various information from \code{nmix} object on current graphics device
 }
 \usage{
-\method{plot}{nmix}(x, which=1, ...) 
+\method{plot}{nmix}(x, which=1, offset=1, nsamp=50, equi=TRUE, ...) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +17,15 @@ Plotting of various information from \code{nmix} object on current graphics devi
 }
   \item{which}{
 integer vector, specifying which of several available plots are required, see 'Details' below
+}
+  \item{offset}{
+numeric, vertical displacement between plotted traces, in the case \code{which} contains 2
+}
+  \item{nsamp}{
+integer, number of posterior samples plotted, in the case \code{which} contains 3
+}
+  \item{equi}{
+logical, should thinning of posterior density samples be equi-spaced, rather than randomm, in the case \code{which} contains 3
 }
   \item{...}{
 additional arguments to \code{\link{plot}}
@@ -29,6 +38,8 @@ additional arguments to \code{\link{plot}}
 If \code{which} includes 1, a 2-panel plot of which: the first is a histogram of the data, and if \code{z} has a component \code{den}, superimposed plots of the posterior density estimates, conditional on \code{k=1,2,...,6} and unconditionally; and the second a barplot of the estimated posterior distribution of \code{k}.
 
 If \code{which} includes 2, a multiple trace plot of various statistics for a thinned subsample of the MCMC run, after burnin-in. The statistics are the (named) components of the list \code{z$traces}, currently (i) the number of components \code{k}, (ii) the entropy, and (iii) if the deviance trace has been saved (\code{out} includes "d"), the deviance, of the current sample. The traces may be of different lengths, the horizontal scales in the plot are adjusted to span the length of the (post burn-in) MCMC run, regardless of these differences.
+
+If \code{which} includes 3, a thinned sample of size \code{nsamp} from the posterior distribution of the density function, computed from a thinned sample of (weight, mean, sd) values generated in the posterior simulation. 
 }
 \references{
 Richardson and Green (J. R. Statist. Soc. B, 1997, 59, 731-792; see also the

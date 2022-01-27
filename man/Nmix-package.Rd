@@ -5,7 +5,7 @@
 \packageTitle{Nmix}
 }
 \description{
-A program for Bayesian analysis of univariate normal mixtures, implementing the approach of Richardson and Green (1997)
+A program for Bayesian analysis of univariate normal mixtures, implementing the approach of Richardson and Green (1997) <doi:10.1111/1467-9868.00095>
 }
 \details{
 A program for Bayesian analysis of univariate normal mixtures with an
@@ -21,8 +21,8 @@ Maintainer: \packageMaintainer{Nmix}
 }
 
 \references{
-Richardson and Green (J. R. Statist. Soc. B, 1997, 59, 731-792; see also the
-correction in J. R. Statist. Soc. B, 1998, 60, 661)}
+Richardson and Green (1997) <doi:10.1111/1467-9868.00095> (J. R. Statist. Soc. B, 59, 731-792; see also the
+correction in <doi:10.1111/1467-9868.00146>, J. R. Statist. Soc. B, 1998, 60, 661)}
 
 \keyword{ package }
 \examples{

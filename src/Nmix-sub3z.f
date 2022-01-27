@@ -1,5 +1,5 @@
 	subroutine nmixsub(y,n,pw,den,avn,ncmax1,ncd1,ngrid1,ncmax21,
-     &	wtav,muav,sigav,acctry,enttr,ktr,devtr,
+     &	wtav,muav,sigav,acctry,enttr,ktr,off,partr,nparsamp,devtr,
 c.. input, dimensions (6)
      &	nmax,ncmax,ncmax2,ncd,ngrid,kkzz,
 c.. input, read only:
@@ -47,8 +47,9 @@ c  idebug,qdebug
 	real wtav(ncmax2,ncmax2),muav(ncmax2,ncmax2),sigav(ncmax2,ncmax2)
 	real avn(ncmax21,ncmax21)
 	real enttr(nsweep/nspace),devtr(nsweep/nspace)
+	real partr(3,nparsamp)
 
-	integer ktr(nsweep/nspace)
+	integer ktr(nsweep/nspace),off(nsweep/nspace),off0
 
 	integer split,combine,allocate,weights,parameters,hyper,
      &		birth,death
@@ -571,6 +572,8 @@ c	if(idebug.lt.0) write(18,'("consts",2g11.5)') const1,const2
 	pf(j) = temp
 	end do
 c	call realpr('pf',2,pf,ncmax)
+
+	off0 = 0
 
 c	if(qdebug) then
 c		write(18,'("initialised")')
@@ -1609,6 +1612,17 @@ c		write(25+ncmax+krep,'(20i3)') (z(i),i=1,n)
 c		write(17,*) k,kpos,ent
 		enttr(isweep/nspace) = ent
 		ktr(isweep/nspace) = k
+		off(isweep/nspace) = off0
+		if(off0+k.le.nparsamp) then
+			j = first
+			do while(j.ne.0)
+				off0 = off0+1
+				partr(1,off0) = wt(j)
+				partr(2,off0) = mu(j)
+				partr(3,off0) = sqrt(ssq(j))
+				j = next(j)
+			end do
+		end if
 		if(qfull) devtr(isweep/nspace) = dev
 	end if
 

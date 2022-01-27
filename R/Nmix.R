@@ -5,7 +5,7 @@ function(y,tag="",seed=0,nsweep=10000,nburnin=0,
       out="",qfull,#qpalloc=0,qpwms=0,qpclass=0,
 	alpha=2,beta=0.02,delta=1,eee=0,fff=0,ggg=0.2,hhh=10,unhw=1.0,     
 	kappa=1.0,lambda=-1,xi=0.0,sp=1,
-	nspace=nsweep%/%1000,nsamp=100,nskdel=2,
+	nspace=nsweep%/%1000,nparsamp=7*(nsweep%/%nspace),nsamp=100,nskdel=2,
 	nmax=length(y),ncmax=30,ncmax2=10,ncd=7,ngrid=200,kkzz=35,
 	idebug=-1,qdebug=0) 
 {
@@ -33,6 +33,7 @@ z<-.Fortran("nmixsub",
 	as.integer(ncmax1),as.integer(ncd1),as.integer(ngrid1),as.integer(ncmax21),
 	wtav=single(ncmax2*ncmax2),muav=single(ncmax2*ncmax2),sigav=single(ncmax2*ncmax2),
 	acctry=integer(8),enttr=single(nsweep%/%nspace),ktr=integer(nsweep%/%nspace),
+	off=integer(nsweep%/%nspace),partr=single(3*nparsamp),as.integer(nparsamp),
 	devtr=single(nsweep%/%nspace),
 	as.integer(nmax),as.integer(ncmax),as.integer(ncmax2),as.integer(ncd),as.integer(ngrid),as.integer(kkzz),
 	nsweep=as.integer(nsweep),nburnin=as.integer(nburnin),as.integer(imoves),as.integer(length(imoves)),
@@ -52,6 +53,11 @@ if(!qfull) z$devtr<-NULL
 z$traces<-list(k=z$ktr,entropy=z$enttr,deviance=z$devtr)
 z$ktr<-NULL; z$enttr<-NULL; z$devtr<-NULL
 
+z$partr<-matrix(z$partr,ncol=3,byrow=TRUE,dimnames=list(NULL,c("wt","mu","sigma")))
+zz<-list()
+for(t in seq_along(z$off)) zz[[t]]<-z$partr[z$off[t]+(1:z$traces$k[t]),]
+z$partr<-zz
+
 attr(z$post,'Csingle')<-NULL
 z$tag<-tag
 z$seed<-seed
@@ -67,6 +73,7 @@ z$pe<-list()
 for(k in 1:ncmax2) if(z$post[k]>0) z$pe[[k]]<-cbind(wt=z$wtav[k,1:k],mu=z$muav[k,1:k],sigma=z$sigav[k,1:k])
 z$wtav<-NULL; z$muav<-NULL; z$sigav<-NULL
 
+z[names(z)==""]<-NULL
 class(z)<-'nmix'
 z
 }
