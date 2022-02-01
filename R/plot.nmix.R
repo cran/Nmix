@@ -83,7 +83,7 @@ yrange<-max(z$y)-min(z$y); yd0 = min(z$y)-0.05*yrange; ydinc = 1.1*yrange/ngrid
 yg<-yd0+ydinc*(1:ngrid)
 
 nsweep<-length(z$partr)
-if(equi) tw<-1+floor(0.5+((1:nsamp)+runif(1))*nsweep/nsamp)%%1000 else tw<-sample(nsweep,nsamp)
+if(equi) tw<-1+floor(0.5+((1:nsamp)+runif(1))*nsweep/nsamp)%%nsweep else tw<-sample(nsweep,nsamp)
 dd<-matrix(0,ngrid,nsamp)
 for(it in seq_along(tw)) for(i in 1:ngrid)
 {

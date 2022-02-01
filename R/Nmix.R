@@ -1,3 +1,4 @@
+
 Nmix<-
 function(y,tag="",seed=0,nsweep=10000,nburnin=0,
 	kinit=1,
@@ -54,9 +55,15 @@ z$traces<-list(k=z$ktr,entropy=z$enttr,deviance=z$devtr)
 z$ktr<-NULL; z$enttr<-NULL; z$devtr<-NULL
 
 z$partr<-matrix(z$partr,ncol=3,byrow=TRUE,dimnames=list(NULL,c("wt","mu","sigma")))
+
 zz<-list()
-for(t in seq_along(z$off)) zz[[t]]<-z$partr[z$off[t]+(1:z$traces$k[t]),]
+for(t in seq_along(z$off)) 
+	{
+	tzm<-z$off[t]+z$traces$k[t]
+	if(tzm<=nrow(z$partr)) zz[[t]]<-z$partr[z$off[t]+(1:z$traces$k[t]),]
+	}
 z$partr<-zz
+if(length(z$partr)<length(z$off)) warning('parameter sample trace truncated: increase nparsamp')
 
 attr(z$post,'Csingle')<-NULL
 z$tag<-tag
