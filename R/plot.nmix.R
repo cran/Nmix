@@ -1,16 +1,16 @@
-plot.nmix<-function(x, which=1, offset=1, nsamp=50, equi=TRUE, ...) 
+plot.nmix<-function(x, which=1:5, separate=FALSE, plugin=FALSE, offset=1, nsamp=50, equi=TRUE, allsort=TRUE, ...) 
 {
 opars<-par(no.readonly=TRUE)
 on.exit(par(opars))
 for(iw in 1:length(which))
 {
 w<-which[iw]
-if(iw>1) par(ask=(iw>1)) 
+if(dev.interactive(TRUE)) if(iw>1) if(separate) dev.new() else par(ask=(iw>1)) 
 switch(w,
 	{
 	layout(matrix(c(1, 2), 2, 1), heights = c(2, 1))
 	par(mar = c(4, 4, 2, 2))
-	pldens(x, add = TRUE)
+	pldens(x, add = TRUE, plugin)
 	np <- length(x$post) + min(0, 3 - match(FALSE, 0 == rev(x$post)))
 	barplot(x$post[1:np], names = 1:np)
 	title("posterior on k")
@@ -19,12 +19,16 @@ switch(w,
 	pltraces(x$traces,offset)
 ,
 	plsampden(x,nsamp,equi)
+,
+	plcoin(x,allsort)
+,
+	if(exists('pcl',x)) plclass(x)
 )
 }
 invisible(NULL)
 }
 
-pldens<-function(x='fort.13',add=FALSE)
+pldens<-function(x='fort.13',add=FALSE, plugin)
 {
 if(is.character(x)) 
 	{
@@ -49,10 +53,25 @@ if(add&!is.null(x$y))
 mtext(x$tag,1,line=2)
 for(j in 2:7) lines(zd[1,],zd[j,])
 lines(zd[1,],zd[8,],col='red',lwd=2)
+if(!plugin) return()
+# add plug-in density estimator
+if(is.null(x$pe)||is.null(x$post)) return()
+yg<-x$den[1,]
+fyg<-rep(0,length(yg))
+for(k in 1:length(x$pe)) if(x$post[k]>0)
+{
+w<-x$pe[[k]][,'wt']; m<-x$pe[[k]][,'mu']; s<-x$pe[[k]][,'sigma']
+fyg<-fyg+x$post[k]*apply(w*dnorm(outer(m,yg,"-")/s)/s,2,sum)
+}
+lines(yg,fyg,type='l',col='blue',lwd=2,lty=2)
 }
 
 pltraces<-function(traces,offset=1,ccol=c('black','red','blue','darkgreen'))
 {
+# only keep simple vectors, not matrices or lists
+traces<-traces[names(which(unlist(lapply(traces,function(x){is.vector(x)&!is.list(x)}))))]
+if(is.null(traces)||length(traces)==0) return()
+
 layout(1)
 par(mar=c(4,4,3,4)+.1)
 
@@ -76,23 +95,67 @@ mtext(names(traces)[itr],side,line=2,at=0.5+level,col=colr)
 
 plsampden<-function(z,nsamp=50,equi=TRUE,ngrid=200)
 {
+if(is.null(z$traces$pars)) return()
 layout(1)
 par(mar=c(4,4,3,4)+.1)
 
 yrange<-max(z$y)-min(z$y); yd0 = min(z$y)-0.05*yrange; ydinc = 1.1*yrange/ngrid
 yg<-yd0+ydinc*(1:ngrid)
 
-nsweep<-length(z$partr)
+nsweep<-length(z$traces$pars)
 if(equi) tw<-1+floor(0.5+((1:nsamp)+runif(1))*nsweep/nsamp)%%nsweep else tw<-sample(nsweep,nsamp)
 dd<-matrix(0,ngrid,nsamp)
 for(it in seq_along(tw)) for(i in 1:ngrid)
 {
 t<-tw[it]
-dd[i,it]<-sum((dnorm((yg[i]-z$partr[[t]][,2])/z$partr[[t]][,3]))*z$partr[[t]][,1])
+dd[i,it]<-sum((dnorm((yg[i]-z$traces$pars[[t]][,2])/z$traces$pars[[t]][,3]))*z$traces$pars[[t]][,1])
 }
 matplot(yg,dd,type='l',lty=1,ylab='',xlab='')
-mtext("Posterior sample",side=3,line=1,cex=1.6)
+abline(h=0)
+mtext("posterior sample of densities",side=3,line=1,cex=1.6)
 title(xlab=z$tag,line=2)
 title(ylab='density',line=2)
 }
 
+plcoin<-function(z,allsort=TRUE)
+{
+if(is.null(z$traces$alloc)) return()
+layout(1)
+par(mar=c(4,4,3,4)+.1)
+
+n<-z$n
+all<-z$traces$alloc
+if(allsort) all<-all[order(z$y),]
+pa<-matrix(0,n,n)
+for(i in 1:n) for(j in 1:n) pa[i,j]<-mean(all[i,]==all[j,])
+image(1:n,1:n,pa,asp=1,xlab='',ylab='')
+mtext("posterior cluster probabilities",side=3,line=1,cex=1.6)
+}
+
+plclass<-function(z,k)
+{
+opars<-par(no.readonly=TRUE)
+on.exit(par(opars))
+if(missing(k))
+{
+#layout(matrix(c(1,3,2,4),2,2))
+par(mfrow=c(2,2),mar=c(3,2,3,2)+.1)
+o<-order(z$post,decreasing=TRUE)
+ks<-sort((o[o<8])[1:4])
+} else {
+par(mfrow=c(1,1),mar=c(4,3,3,3)+.1)
+ks<-k
+}
+for(k in ks) 
+{
+ngrid<-200
+yrange<-max(z$y)-min(z$y); yd0 = min(z$y)-0.05*yrange; ydinc = 1.1*yrange/ngrid
+yg<-yd0+ydinc*(1:ngrid)
+rows<-((k-2)*(k+1))/2+(1:(k-1))
+matplot(yg,t(z$pcl[rows,]),type='l',lty=1,xlab='',ylab='')
+matplot(z$y,t(z$scl[rows,]),pch=3,add=TRUE)
+mtext('cumulative probability',2,line=2)
+mtext(z$tag,1,line=2)
+mtext(paste('k =',k),side=3,line=0.5,cex=1.2)
+}
+}

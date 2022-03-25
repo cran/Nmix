@@ -10,12 +10,10 @@
 extern void F77_NAME(nmixsub)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *,
                               void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, 
                               void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, 
-                              void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, 
-                              void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, 
-                              void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+                              void *);
 
 static const R_FortranMethodDef FortranEntries[] = {
-    {"nmixsub", (DL_FUNC) &F77_NAME(nmixsub), 60},
+    {"nmixsub", (DL_FUNC) &F77_NAME(nmixsub), 31},
     {NULL, NULL, 0}
 };
 

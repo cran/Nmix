@@ -183,8 +183,8 @@ c	y = rgamma(a2)
 c---------------------------------------------------
 
 	real function logbeta(x1,x2)
-	INTEGER, PARAMETER :: dbl = KIND(1.0d0)
-	REAL(KIND=dbl) :: dlgama
+	integer, parameter :: dbl = kind(1.0d0)
+	real(kind=dbl) :: dlgama
 	logbeta = sngl(dlgama(dble(x1))+dlgama(dble(x2))
      &		-dlgama(dble(x1+x2)))
 	return

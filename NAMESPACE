@@ -2,9 +2,10 @@ useDynLib(Nmix,.registration=TRUE)
 S3method(print,nmix)
 S3method(summary,nmix)
 S3method(plot,nmix)
-export(Nmix,plot.nmix,print.nmix,summary.nmix,sdrni)
+export(Nmix,plot.nmix,print.nmix,summary.nmix,sdrni,readf2cio)
 importFrom("graphics", "axis", "barplot", "hist", "layout", "lines",
-             "mtext", "par", "title", "matplot")
+             "mtext", "par", "title", "matplot", "image", "abline")
 importFrom("stats", "dnorm", "runif")
+importFrom("grDevices", "dev.new", "dev.interactive")
 useDynLib(Nmix, .registration = TRUE)
 
