@@ -1,4 +1,4 @@
-a2a04682d0faa9f7f058aff086414d59 *DESCRIPTION
+efec8f301725368f46f0623d14a19504 *DESCRIPTION
 86ede256704f2dc0a44f168ce899b31e *NAMESPACE
 b331694d21c4b9c73d88953f945e77a1 *R/Nmix.R
 d708ee30c999ad7110dbbf997a44fd3c *R/encode.R
@@ -9,12 +9,12 @@ b9b7984871e941d87852aa4b64c47c09 *R/print.nmix.R
 734a79eaa4d19b89fb3ca827e680aaad *R/reimport.R
 efbabdf1d340431031118dfdc8729bc7 *R/sdrni.R
 556a3eae8ef0eab19345e367c52caa8c *R/summary.nmix.R
-3108ab00faac46a68c0371ace8f95a5a *build/partial.rdb
+4358608fd53a0ee4380432836f94448b *build/partial.rdb
 7a2076c9b08b31c7bb425d79d3eaaf7c *data/enz.rda
 200ce53603cd1e94affdc774d7d8b75a *data/galx.rda
 ed2b6f12d0cac13fccd1b24cf4b74e57 *data/lnacid.rda
-1d283064bf18802ed7603ca740c46d56 *man/Nmix-package.Rd
-c01330de404cb99a435289aa8616cdbf *man/Nmix.Rd
+3e6d09457e9ec208fc5a0a9e403bc6c0 *man/Nmix-package.Rd
+c076bb23676e0d2c2a3243b95c2ce196 *man/Nmix.Rd
 71b7dc71598b44427c7e595fff915ac2 *man/enz.Rd
 93761223e9f3d199cf68f8524aad94a3 *man/galx.Rd
 fdb7acda651e1da90131dbc60dd27ea7 *man/lnacid.Rd
@@ -23,7 +23,7 @@ fdb7acda651e1da90131dbc60dd27ea7 *man/lnacid.Rd
 ba2a9dded782e7261863310786f90c40 *man/readf2cio.Rd
 f147cec6eb2bbd96abda5eb9f6a29c7a *man/sdrni.Rd
 d04e4bc6fd334df4e1fe4543dfe8b2f0 *man/summary.nmix.Rd
-a71d4df53de8e329ef71484f3e74fb70 *src/Makevars
+2a70d71c0a92f1cbdbb3e62f75edc785 *src/Makevars
 b86527f86e607cc64b9a057e80f8acfe *src/Nmix-aux.f
 cf71bcff8d4a2a08d5389ae305a2db26 *src/Nmix-sub3z.f
 912e5a70d11f8712547089dfa68d0c03 *src/Nmix_init.c

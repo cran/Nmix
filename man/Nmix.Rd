@@ -163,6 +163,8 @@ correction in J. R. Statist. Soc. B, 1998, 60, 661.
 
 Green, P. J. and Richardson, S. Modelling heterogeneity with and without the Dirichlet process,
 Scandinavian Journal of Statistics, 2001, 28, 355-375.
+
+The author is grateful to Peter Soerensen for providing the interface to the C i/o routines used here, borrowed from his package \code{qgg}.
 }
 
 \author{

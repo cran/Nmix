@@ -22,12 +22,14 @@ Maintainer: \packageMaintainer{Nmix}
 
 \references{
 Richardson and Green (1997) <doi:10.1111/1467-9868.00095> (J. R. Statist. Soc. B, 59, 731-792; see also the
-correction in <doi:10.1111/1467-9868.00146>, J. R. Statist. Soc. B, 1998, 60, 661)}
+correction in <doi:10.1111/1467-9868.00146>, J. R. Statist. Soc. B, 1998, 60, 661).
 
+The author is grateful to Peter Soerensen for providing the interface to the C i/o routines used here.
+}
 \keyword{ package }
 \examples{
 data(galx)
-z<-Nmix('galx',nsweep=10000,nburnin=1000,out="d")
+z<-Nmix('galx',nsweep=10000,nburnin=1000)
 print(z)
 summary(z)
 }
