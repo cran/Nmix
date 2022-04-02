@@ -152,8 +152,8 @@ ngrid<-200
 yrange<-max(z$y)-min(z$y); yd0 = min(z$y)-0.05*yrange; ydinc = 1.1*yrange/ngrid
 yg<-yd0+ydinc*(1:ngrid)
 rows<-((k-2)*(k+1))/2+(1:(k-1))
-matplot(yg,t(z$pcl[rows,]),type='l',lty=1,xlab='',ylab='')
-matplot(z$y,t(z$scl[rows,]),pch=3,add=TRUE)
+matplot(yg,t(z$pcl[rows,,drop=FALSE]),type='l',lty=1,xlab='',ylab='')
+matplot(z$y,t(z$scl[rows,,drop=FALSE]),pch=3,add=TRUE)
 mtext('cumulative probability',2,line=2)
 mtext(z$tag,1,line=2)
 mtext(paste('k =',k),side=3,line=0.5,cex=1.2)

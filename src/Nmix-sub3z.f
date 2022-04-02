@@ -54,9 +54,6 @@ c--
 	real kappa,lambda,mu1,mu2,muc,ms,logratio,logbeta,lprob
 	real kwas,loglikrat,mustar(1)
 
-	integer, parameter :: dbl = kind(1.0d0)
-	real(kind=dbl) :: dlgama
-
 	real y(nmax),den(ncd,ngrid),pw(ncmax)
 	real wtav(ncmax2,ncmax2),muav(ncmax2,ncmax2),sigav(ncmax2,ncmax2)
 	real avn(ncmax2,ncmax2)
@@ -545,9 +542,9 @@ c.. initialise accumulators
 	nrejr = 0
 
 	if(qunif) then
-	    const1 = -sngl(dlgama(dble(alpha)))
+	    const1 = -log_gamma(alpha)
 	else
-	    const1 = 0.5*log(0.5/pi)-sngl(dlgama(dble(alpha)))
+	    const1 = 0.5*log(0.5/pi)-log_gamma(alpha)
 	end if
 	const2 = logbeta(ws,ws)+logbeta(ms,ms)+logbeta(ss,ss)
 
@@ -996,7 +993,7 @@ c.. Gibbs move for allocation -------------------------------
 	if(k.gt.1) then
 
 	   call stdalloc(yv,n,wt,mu,ssq,ncmax,start,leng,next,pw,inext,
-     &		first,delta,qprior)
+     &		first,qprior)
 	   kemp = 0
 	   j = first
 	   do while(j.ne.0)

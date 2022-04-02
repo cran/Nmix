@@ -1,5 +1,5 @@
 	subroutine stdalloc(y,n,wt,mu,ssq,ncmax,start,leng,next,pw,inext,
-     &		first,delta,qprior)
+     &		first,qprior)
 
 	integer first,start
 	real mu
@@ -183,9 +183,6 @@ c	y = rgamma(a2)
 c---------------------------------------------------
 
 	real function logbeta(x1,x2)
-	integer, parameter :: dbl = kind(1.0d0)
-	real(kind=dbl) :: dlgama
-	logbeta = sngl(dlgama(dble(x1))+dlgama(dble(x2))
-     &		-dlgama(dble(x1+x2)))
+	logbeta = log_gamma(x1)+log_gamma(x2)-log_gamma(x1+x2)
 	return
 	end

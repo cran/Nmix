@@ -4,6 +4,6 @@ all: $(SHLIB) clean
 $(SHLIB): $(FT_OBJS) $(C_OBJS)
 f2cio.mod: f2cio.o
 fef2cio.mod: fef2cio.o f2cio.o
-Nmix-sub3z.o: f2cio.mod fef2cio.mod
+Nmix-sub3z.o: f2cio.o fef2cio.o
 clean:
 	@rm -rf *.mod *.o

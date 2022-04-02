@@ -3,7 +3,7 @@
 	double precision unifrnd
 
 	call rndstart()
-	u = unifrnd()
+	u = real(unifrnd())
 	sdrand = u
 	call rndend()
 	return
@@ -18,7 +18,7 @@ c..    generates an n-vector of i.i.d. N(0,1) r.v.'s z
 
 	call rndstart()
 	do i = 1,n
-		z(i) = normrnd()
+		z(i) = real(normrnd())
 	end do
 	call rndend()
 
