@@ -5,7 +5,7 @@
 * ======================================================================
 * NORCDF
 c      SUBROUTINE NORCDF(X,CDF)
-	function pnorm(x)
+      function pnorm(x)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
 C              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
@@ -59,6 +59,6 @@ C
      1+B4*T**4+B5*T**5)
       IF(X.LT.0.0)CDF=1.0-CDF 
 C
-	pnorm = CDF
+      pnorm = CDF
       RETURN
       END 

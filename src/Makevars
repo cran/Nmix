@@ -1,9 +1,8 @@
 C_OBJS = wrapper.o Nmix_init.o
-FT_OBJS = Nmix-aux.o Nmix-sub3z.o RNGfns.o f2cio.o fef2cio.o pnorm.o rgamma2.o
-all: $(SHLIB) clean
+FT_OBJS = Nmix-aux.o Nmix-sub3z.o RNGfns.o f2cios.o pnorm.o rgamma2.o
+all: $(SHLIB) 
 $(SHLIB): $(FT_OBJS) $(C_OBJS)
-f2cio.mod: f2cio.o
-fef2cio.mod: fef2cio.o f2cio.o
-Nmix-sub3z.o: f2cio.o fef2cio.o
-clean:
-	@rm -rf *.mod *.o
+%.mod %.o: %.f90
+	$(FC) -fno-optimize-sibling-calls -fpic $(FFLAGS) -c $< -o $@
+Nmix-sub3z.o: f2cios.o
+
