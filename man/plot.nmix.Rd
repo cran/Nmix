@@ -54,7 +54,7 @@ If \code{which} includes 2, a multiple trace plot of various statistics for a th
 
 If \code{which} includes 3 (and \code{Nmix} output option p is present), a thinned sample of size \code{nsamp} from the posterior distribution of the density function, computed from a thinned sample of (weight, mean, sd) values generated in the posterior simulation. 
 
-If \code{which} includes 4 (and \code{Nmix} output option a is present), an image plot showing the posterior probabilities that the corresponding observations are in the same mixture component. 
+If \code{which} includes 4 (and \code{Nmix} output option a is present), an image plot showing the posterior probabilities that the corresponding observations are in the same mixture component. Not recommended for large \code{n}.
 
 If \code{which} includes 5 (and \code{Nmix} output option C is present), a 4-panel plot displaying Bayersian classifications based on the fitted model, analogous to Fig. 10 in the Richardson and Green paper. The 4 panels corresponding to conditioning on the 4 values of \code{k} most probable according to the posterior (among those for which the necessary posterior sample information has been recorded (see argument \code{k1k2} of \code{Nmix}), and excepting \code{k=1}).
 }

@@ -1,22 +1,11 @@
 \name{print.nmix}
 \alias{print.nmix}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Printing for Bayesian Inference on Univariate Normal Mixtures
-}
-\description{
-Printing of various information about \code{nmix} object on current output
-}
-\usage{
-\method{print}{nmix}(x, ...) 
-}
+\title{Printing for Bayesian Inference on Univariate Normal Mixtures}
+\description{Printing of various information about \code{nmix} object on current output}
+\usage{\method{print}{nmix}(x, ...)}
 \arguments{
-  \item{x}{
-\code{nmix} object, as output by \code{Nmix} function
-}
-  \item{...}{
-additional arguments to \code{\link{print}}
-}
+  \item{x}{\code{nmix} object, as output by \code{Nmix} function}
+  \item{...}{additional arguments to \code{\link{print}}}
 }
 \value{
 \code{x}, invisibly; print method for class \code{nmix}. Function called for its side effect of printing selected information from \code{x}

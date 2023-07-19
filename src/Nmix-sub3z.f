@@ -38,8 +38,8 @@ c-- for binary writes
 c-- 
 
       character moveselect,sep
-      character*5 movnam(8)
-      character*8 movabb
+      character (len=5) movnam(8)
+      character (len=8) movabb
 
       logical qbeta,qkappa,qdebug,qprior,qrange,
      &            qfix,qunif,qempty,qrkpos,

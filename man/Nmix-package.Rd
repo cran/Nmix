@@ -15,8 +15,6 @@ see also the correction in J. R. Statist. Soc. B, 1998, 60, 661).
 Computation is by reversible jump Markov chain Monte Carlo; this package is essentially an R interface to the Fortran program
 originally written in 1996 for the MCMC sampling, together with some facilities for displaying and summarising the resulting posterior distribution, and reporting the sampler performance.}
 \author{
-\packageAuthor{Nmix}
-
 Maintainer: \packageMaintainer{Nmix}
 }
 

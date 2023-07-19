@@ -90,7 +90,7 @@ numeric, set value of half-width for uniform proposals
 numeric, set value of parameter kappa
 }
   \item{lambda}{
-numeric, set value of parameter lambda
+numeric, set value of parameter lambda; the value -1 (the default) means a prior for k uniform on 1,2,...ncmax
 }
   \item{xi}{
 numeric, set value of parameter xi
@@ -108,7 +108,7 @@ spacing between samples recorded in time-series traces (see Details)
 integer, set upper bound for \code{n}
 }
   \item{ncmax}{
-integer, set upper bound for \code{k}
+integer, set upper bound for \code{k}; the same as \code{kmax} in the references
 }
   \item{ncmax2}{
 integer, set upper bound for \code{k} in output components \code{pe} and \code{avn}
@@ -123,7 +123,7 @@ integer, set number of grid points for density evaluation
 vector of 2 integers, set minimum and maximum number of components for classification calculation
 }
   \item{idebug}{
-integer, number of sweep from which to print debugginh information
+integer, number of sweep from which to print debugging information
 }
   \item{qdebug}{
 integer 1 or 0 according to whether debugging information is to be printed

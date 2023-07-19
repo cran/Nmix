@@ -3,6 +3,6 @@ FT_OBJS = Nmix-aux.o Nmix-sub3z.o RNGfns.o f2cios.o pnorm.o rgamma2.o
 all: $(SHLIB) 
 $(SHLIB): $(FT_OBJS) $(C_OBJS)
 %.mod %.o: %.f90
-	$(FC) -fno-optimize-sibling-calls -fpic $(FFLAGS) -c $< -o $@
+	$(FC) -fpic $(FFLAGS) -c $< -o $@
 Nmix-sub3z.o: f2cios.o
 
