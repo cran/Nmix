@@ -136,6 +136,7 @@ An object of class \code{nmix}. List with numerous components, including
   \item{den}{matrix of density estimates for \code{k=1,2,...,6} and overall, preceded by row of abcissae at which they are evaluated - only when \code{out} includes "D"}
   \item{avn}{order-\code{ncmax2} square matrix with \code{(i,j)} entry the posterior expected number of observations allocated to component \code{i} when there are \code{j} components in the mixture - only when \code{out} includes "A"}
   \item{traces}{list of named vectors, traces of selected statistics \code{k}, \code{entropy} (as defined in Green and Richardson, 2001), etc, sub-sampled to every \code{nspace} sweeps}
+  \item{iflag}{integer flagging successful completion of simulation (0) or not (1)}
 }
 \details{
 Output options:

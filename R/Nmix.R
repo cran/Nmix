@@ -13,9 +13,9 @@ seed<-sdrni(seed) #; cat(seed,'\n')
 
 moves<-'wpah'
 if(!qfix) moves<-paste0('s',moves)
-if(qempty) moves<-paste0(moves,'b')
+if((!qfix)&qempty) moves<-paste0(moves,'b')
 imoves<-match(strsplit(moves,NULL)[[1]],strsplit('scawphbd',NULL)[[1]])
-# cat(moves,'\n')
+# cat('moves',moves,imoves,'\n')
 
 if(out=='*') out<-'DCApkdea'
 sout<-unlist(strsplit('DCA',''))%in%unlist(strsplit(out,''))
@@ -42,7 +42,10 @@ z<-.Fortran("nmixsub",
 	as.integer(kinit),as.integer(nspace),as.integer(idebug),
 	as.integer(c(qempty,qprior,qunif,qfix,qrkpos,qrange,qkappa,qbeta,sout,tout,qdebug)),
 	as.single(c(alpha,beta,delta,eee,fff,ggg,hhh,unhw,kappa,lambda,xi,sp)),
+	iflag=integer(1),
 	PACKAGE="Nmix")
+
+# cat('z$post',z$post,'\n')
 
 # traces
 partr<-ktr<-devtr<-enttr<-ztr<-NULL

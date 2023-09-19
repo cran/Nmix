@@ -93,10 +93,17 @@ colr<-ccol[1+(itr-1)%%length(ccol)]
 level<-offset*(ntr-itr)
 side<-4-2*(itr%%2)
 zz<-traces[[itr]]
-lab<-pretty(zz,n=3)
+if(max(zz)-min(zz)<1e-6) {
+lab<-signif(mean(zz),6)
+u<-rep(0.5,length(zz))
+at<-level+0.5
+} else {
+lab<-signif(pretty(zz,n=3),6)
 u<-(zz-min(zz))/(max(zz)-min(zz))
+at<-(lab-min(zz))/(max(zz)-min(zz))+level
+}
 lines(seq_along(u)*ltr/length(u),u+level,col=colr)
-axis(side,at=(lab-min(zz))/(max(zz)-min(zz))+level,labels=lab,col=colr,col.axis=colr)
+axis(side,at=at,labels=lab,col=colr,col.axis=colr)
 mtext(names(traces)[itr],side,line=2,at=0.5+level,col=colr)
 }
 }

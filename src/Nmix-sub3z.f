@@ -3,13 +3,15 @@ c.. output
      &      pw,den,avn,wtav,muav,sigav,acctry,
      &      ifn,lfn,nfn,
      &      pclass,pz,
-c.. input, dimensions, sampling pars and output control (16)
+c.. input, dimensions, sampling pars and output control (15)
      &      nmax,ncmax,ncmax2,ncd,ngrid,k1,k2,kkzz,nsweep,nburnin,
      &      imoves,nstep,kinit,nspace,idebug,
 c.. switches (1=17): 
      &      switches,
 c.. model pars (1=12): 
-     &      mpars)
+     &      mpars,
+c.. error flag:
+     &	iflag)
 
 c=     &  switches:
 c=     &    qempty,qprior,qunif,qfix,qfull,qrkpos,qrange,qkappa,
@@ -79,6 +81,8 @@ c--
 
       logical, dimension(:), allocatable :: fileopen
 
+	iflag = 1
+
       pi = 4.0*atan(1.0)
       rr2pi = 1.0/sqrt(2.0*pi)
 
@@ -117,6 +121,10 @@ c.. trace options (k,entropy,deviance,pars,alloc)
       toutd = switches(14)
       toute = switches(15)
       touta = switches(16)
+
+c	call intpr1('kinit',5,kinit)
+c	if(qfix) call intpr1('qfix',4,1)
+c	if(.not.qfix) call intpr1('qfix',4,0)
 
       qdebug = switches(17)
 
@@ -1530,6 +1538,23 @@ c--
       acctry(1,4) = naccd
       acctry(2,4) = ntryd
 
+c.. write prior probs p(k)
+
+      do k = 1,ncmax
+          pw(k) = exp(lp(k))
+      end do
+c	call realpr('prior k',7,pw,ncmax)
+
+c.. write posterior probs for number of nonempty components
+
+      do k = 1,ncmax
+               pw(k) = real(countpos(k))/nsweep
+      end do
+c	call realpr('post kpos',9,pw,ncmax)
+
+      avkemp = avkemp/nkemp
+      ppkemp = ppkemp/nkemp
+
 c.. output posterior probs for k, and Bayes factors
 
       kbase = 0
@@ -1537,25 +1562,11 @@ c.. output posterior probs for k, and Bayes factors
             pw(k) = real(count(k))/nsweep
             if(kbase.eq.0.and.count(k).ne.0) kbase = k
       end do
+c	call realpr('post k',6,pw,ncmax)
 
       do k = 1,ncmax
           bf(k) = (pw(k)/pw(kbase))/exp(lp(k)-lp(kbase))
       end do
-
-c.. write prior probs p(k)
-
-      do k = 1,ncmax
-          pw(k) = exp(lp(k))
-      end do
-
-c.. write posterior probs for number of nonempty components
-
-      do k = 1,ncmax
-               pw(k) = real(countpos(k))/nsweep
-      end do
-
-      avkemp = avkemp/nkemp
-      ppkemp = ppkemp/nkemp
 
 c.. output posterior expectations of parameters
 
@@ -1652,6 +1663,8 @@ c.. output within-sample classification
       end do
 
       end if
+
+	iflag = 0
 
       return
       end
